@@ -1,9 +1,10 @@
 from peewee import Model, CharField, IntegerField
 from .db import db
 
-class User(Model):
+class Member(Model):
     name = CharField()
     age = IntegerField()
+    email = CharField()
 
     class Meta:
         database = db

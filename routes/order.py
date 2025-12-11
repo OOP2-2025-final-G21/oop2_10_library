@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import Order, User, Product
+from models import Order, Member, Product
 from datetime import datetime
 
 # Blueprintの作成
@@ -15,15 +15,15 @@ def list():
 @order_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        user_id = request.form['user_id']
+        member_id = request.form['member_id']
         product_id = request.form['product_id']
         order_date = datetime.now()
-        Order.create(user=user_id, product=product_id, order_date=order_date)
+        Order.create(member=member_id, product=product_id, order_date=order_date)
         return redirect(url_for('order.list'))
     
-    users = User.select()
+    members = Member.select()
     products = Product.select()
-    return render_template('order_add.html', users=users, products=products)
+    return render_template('order_add.html', members=members, products=products)
 
 
 @order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
@@ -33,11 +33,11 @@ def edit(order_id):
         return redirect(url_for('order.list'))
 
     if request.method == 'POST':
-        order.user = request.form['user_id']
+        order.member = request.form['member_id']
         order.product = request.form['product_id']
         order.save()
         return redirect(url_for('order.list'))
 
-    users = User.select()
+    members = Member.select()
     products = Product.select()
-    return render_template('order_edit.html', order=order, users=users, products=products)
+    return render_template('order_edit.html', order=order, members=members, products=products)

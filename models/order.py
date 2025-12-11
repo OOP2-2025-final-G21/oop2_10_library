@@ -1,10 +1,10 @@
 from peewee import Model, ForeignKeyField, DateTimeField
 from .db import db
-from .user import User
+from .user import Member
 from .product import Product
 
 class Order(Model):
-    user = ForeignKeyField(User, backref='orders')
+    member = ForeignKeyField(Member, backref='orders')
     product = ForeignKeyField(Product, backref='orders')
     order_date = DateTimeField()
 

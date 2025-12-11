@@ -14,10 +14,10 @@
     </ul>
 
     <form action="{{ url_for('order.edit', order_id=order.id) }}" method="post">
-        <label>ユーザー: 
-            <select name="user_id" required>
-                {% for user in users %}
-                    <option value="{{ user.id }}" {% if order.user.id == user.id %}selected{% endif %}>{{ user.name }}</option>
+        <label>メンバー: 
+            <select name="member_id" required>
+                {% for member in members %}
+                    <option value="{{ member.id }}" {% if order.member.id == member.id %}selected{% endif %}>{{ member.name }}</option>
                 {% endfor %}
             </select>
         </label><br>
