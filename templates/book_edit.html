@@ -15,20 +15,25 @@
     </ul>
 
     <form action="{{ url_for('book.edit', book_id=book.id) }}" method="post">
-        <label>タイトル: 
-            <input type="text" name="title" value="{{ book.title }}" required>
-        </label><br>
+    <label>タイトル:
+        <input type="text" name="title" value="{{ book.title }}" required>
+    </label><br>
 
-        <label>著者: 
-            <input type="text" name="author" value="{{ book.author }}" required>
-        </label><br>
+    <label>著者:
+        <input type="text" name="author" value="{{ book.author }}" required>
+    </label><br>
 
-        <label>価格: 
-            <input type="number" step="1" name="price" value="{{ book.price }}" required>
-        </label><br>
+    <label>発行年:
+        <input type="number" name="published_year" value="{{ book.published_year }}" required>
+    </label><br>
 
-        <button type="submit">保存</button>
-    </form>
+    <label>ジャンル:
+        <input type="text" name="genre" value="{{ book.genre }}" required>
+    </label><br>
+
+    <button type="submit">保存</button>
+</form>
+
 </body>
 </html>
 
