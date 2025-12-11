@@ -31,7 +31,8 @@
                 {% for borrow in items %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('borrow.edit', borrow_id=borrow.id) }}"
+                        <a
+                            href="{{ url_for('borrow.edit', borrow_id=borrow.id) }}"
                             >編集</a
                         >
                     </td>
