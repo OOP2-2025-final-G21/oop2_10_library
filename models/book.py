@@ -1,11 +1,14 @@
-from peewee import *
-from .base import BaseModel   # サンプルと同じ構成の場合は必要
+from peewee import Model, CharField, IntegerField
+from .db import db
 
-class Book(BaseModel):
+class Book(Model):
     title = CharField()               # 本のタイトル
     author = CharField()              # 著者名
     published_year = IntegerField()   # 発行年
     genre = CharField()               # ジャンル
+
+    class Meta:
+        database = db
 
     def __str__(self):
         return f"{self.title} ({self.author})"

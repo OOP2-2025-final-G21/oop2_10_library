@@ -1,16 +1,21 @@
+<!-- @format -->
+
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>注文管理システム</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
-</head>
-<body>
-    <h1>注文管理システム</h1>
-    <ul>
-      <li><a href="{{ url_for('user.list') }}">ユーザー（顧客）</a></li>
-      <li><a href="{{ url_for('book.list') }}">製品</a></li>
-      <li><a href="{{ url_for('order.list') }}">注文</a></li>
-    </ul>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>図書館管理システム</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='base-style.css') }}"
+        />
+    </head>
+    <body>
+        <h1>図書館管理システム</h1>
+        <ul>
+            <li><a href="{{ url_for('user.list') }}">メンバー</a></li>
+            <li><a href="{{ url_for('book.list') }}">本</a></li>
+            <li><a href="{{ url_for('borrow.list') }}">貸出</a></li>
+        </ul>
+    </body>
 </html>
