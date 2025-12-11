@@ -17,16 +17,23 @@
         </ul>
 
         <form action="{{ url_for('book.add') }}" method="post">
-            <label>タイトル: <input type="text" name="title" required /></label
-            ><br />
-            <label>著者: <input type="text" name="author" required /></label
-            ><br />
-            <label
-                >価格:
-                <input type="number" step="1" name="price" required /></label
-            ><br />
+    <label>タイトル:
+        <input type="text" name="title" required>
+    </label><br>
 
-            <button type="submit">追加</button>
-        </form>
+    <label>著者:
+        <input type="text" name="author" required>
+    </label><br>
+
+    <label>発行年:
+        <input type="number" name="published_year" required>
+    </label><br>
+
+    <label>ジャンル:
+        <input type="text" name="genre" required>
+    </label><br>
+
+    <button type="submit">追加</button>
+</form>
     </body>
 </html>
