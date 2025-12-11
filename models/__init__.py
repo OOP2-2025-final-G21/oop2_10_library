@@ -1,5 +1,6 @@
 from peewee import SqliteDatabase
 from .db import db
+
 from .user import Member
 from .book import Book
 from .borrow import Borrow
