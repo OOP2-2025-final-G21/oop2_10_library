@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>本一覧</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='base-style.css') }}">
+</head>
+<body>
+    <h1>{{ title }}</h1>
+
+    <ul class="breadcrumb">
+        <li><a href="{{ url_for('index') }}">HOME</a></li>
+        <li>本一覧</li>
+    </ul>
+
+    <a href="{{ url_for('books.add') }}">新規本追加</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>タイトル</th>
+                <th>著者</th>
+                <th>発行年</th>
+                <th>ジャンル</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for book in items %}
+            <tr>
+                <td><a href="{{ url_for('books.edit', book_id=book.id) }}">編集</a></td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.published_year }}</td>
+                <td>{{ book.genre }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
