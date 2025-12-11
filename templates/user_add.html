@@ -2,27 +2,30 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <title>メンバーの追加</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='base-style.css') }}"
-    />
-  </head>
-  <body>
-    <h1>新しいメンバーを追加</h1>
-    <ul class="breadcrumb">
-      <li><a href="{{ url_for('index') }}">HOME</a></li>
-      <li><a href="{{ url_for('user.list') }}">メンバー一覧</a></li>
-      <li>メンバー登録</li>
-    </ul>
+    <head>
+        <meta charset="UTF-8" />
+        <title>メンバーの追加</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='base-style.css') }}"
+        />
+    </head>
+    <body>
+        <h1>新しいメンバーを追加</h1>
+        <ul class="breadcrumb">
+            <li><a href="{{ url_for('index') }}">HOME</a></li>
+            <li><a href="{{ url_for('user.list') }}">メンバー一覧</a></li>
+            <li>メンバー登録</li>
+        </ul>
 
-    <form action="{{ url_for('user.add') }}" method="post">
-      <label>名前: <input type="text" name="name" required /></label><br />
-      <label>年齢: <input type="number" name="age" required /></label><br />
-      <label>email: <input type="email" name="email" required /></label><br />
-      <button type="submit">追加</button>
-    </form>
-  </body>
+        <form action="{{ url_for('user.add') }}" method="post">
+            <label>名前: <input type="text" name="name" required /></label
+            ><br />
+            <label>年齢: <input type="number" name="age" required /></label
+            ><br />
+            <label>email: <input type="email" name="email" required /></label
+            ><br />
+            <button type="submit">追加</button>
+        </form>
+    </body>
 </html>
