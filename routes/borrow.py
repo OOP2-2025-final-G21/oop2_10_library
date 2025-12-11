@@ -1,44 +1,43 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from models import Borrow, Membeer, Book
+from models import Borrow, Member, Book
 from datetime import datetime
 
 # Blueprintの作成
-order_bp = Blueprint('order', __name__, url_prefix='/orders')
+borrow_bp = Blueprint('borrow', __name__, url_prefix='/borrows')
 
 
-@order_bp.route('/')
+@borrow_bp.route('/')
 def list():
-    orders = Borrow.select()
-    return render_template('order_list.html', title='注文一覧', items=orders)
+    borrows = Borrow.select()
+    return render_template('borrow_list.html', title='貸出一覧', items=borrows)
 
 
-@order_bp.route('/add', methods=['GET', 'POST'])
+@borrow_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        user_id = request.form['user_id']
-        product_id = request.form['product_id']
-        order_date = datetime.now()
-        Borrow.create(user=user_id, product=product_id, order_date=order_date)
-        return redirect(url_for('order.list'))
+        member_id = request.form['member_id']
+        book_id = request.form['book_id']
+        borrow_date = datetime.now()
+        Borrow.create(member=member_id, book=book_id, borrow_date=borrow_date)
+        return redirect(url_for('borrow.list'))
     
-    users = Member.select()
-    products = Book.select()
-    return render_template('order_add.html', users=users, products=products)
+    members = Member.select()
+    books = Book.select()
+    return render_template('borrow_add.html', members=members, books=books)
 
 
-@order_bp.route('/edit/<int:order_id>', methods=['GET', 'POST'])
-def edit(order_id):
-    order = Borrow.get_or_none(Borrow.id == order_id)
-    if not order:
-        return redirect(url_for('order.list'))
+@borrow_bp.route('/edit/<int:borrow_id>', methods=['GET', 'POST'])
+def edit(borrow_id):
+    borrow = Borrow.get_or_none(Borrow.id == borrow_id)
+    if not borrow:
+        return redirect(url_for('borrow.list'))
 
     if request.method == 'POST':
-        order.user = request.form['user_id']
-        order.product = request.form['product_id']
-        order.save()
-        return redirect(url_for('order.list'))
+        borrow.member = request.form['member_id']
+        borrow.book = request.form['book_id']
+        borrow.save()
+        return redirect(url_for('borrow.list'))
 
-
-    users = Member.select()
-    products = Book.select()
-    return render_template('order_edit.html', order=order, users=users, products=products)
+    members = Member.select()
+    books = Book.select()
+    return render_template('borrow_edit.html', borrow=borrow, members=members, books=books)

@@ -1,63 +1,47 @@
-from flask import Blueprint, render_template, request, redirect
-from models.book import Book
+from flask import Blueprint, render_template, request, redirect, url_for
+from models import Book
 
-bp = Blueprint('books', __name__, url_prefix='/books')
+book_bp = Blueprint('book', __name__, url_prefix='/books')
 
 # 一覧表示
-@bp.route('/')
-def list_books():
+@book_bp.route('/')
+def list():
     books = Book.select()
-    return render_template('books/list.html', books=books)
+    return render_template('book_list.html', title='本一覧', items=books)
 
-# 新規登録フォーム
-@bp.route('/new')
-def new_book():
-    return render_template('books/new.html')
+# 新規登録
+@book_bp.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        title = request.form.get('title')
+        author = request.form.get('author')
+        published_year = request.form.get('published_year')
+        genre = request.form.get('genre')
 
-# 新規登録処理
-@bp.route('/create', methods=['POST'])
-def create_book():
-    title = request.form.get('title')
-    author = request.form.get('author')
-    published_year = request.form.get('published_year')
-    genre = request.form.get('genre')
+        Book.create(
+            title=title,
+            author=author,
+            published_year=int(published_year),
+            genre=genre
+        )
+        return redirect(url_for('book.list'))
 
-    Book.create(
-        title=title,
-        author=author,
-        published_year=int(published_year),
-        genre=genre
-    )
+    return render_template('book_add.html')
 
-    return redirect('/books')
 
-# 編集フォーム
-@bp.route('/edit/<int:id>')
-def edit_book(id):
-    book = Book.get_or_none(Book.id == id)
+# 編集
+@book_bp.route('/edit/<int:book_id>', methods=['GET', 'POST'])
+def edit(book_id):
+    book = Book.get_or_none(Book.id == book_id)
     if not book:
-        return redirect('/books')
-    return render_template('books/edit.html', book=book)
+        return redirect(url_for('book.list'))
 
-# 編集更新処理
-@bp.route('/update/<int:id>', methods=['POST'])
-def update_book(id):
-    book = Book.get_or_none(Book.id == id)
-    if not book:
-        return redirect('/books')
+    if request.method == 'POST':
+        book.title = request.form.get('title')
+        book.author = request.form.get('author')
+        book.published_year = int(request.form.get('published_year'))
+        book.genre = request.form.get('genre')
+        book.save()
+        return redirect(url_for('book.list'))
 
-    book.title = request.form.get('title')
-    book.author = request.form.get('author')
-    book.published_year = int(request.form.get('published_year'))
-    book.genre = request.form.get('genre')
-
-    book.save()
-    return redirect('/books')
-
-# 削除処理
-@bp.route('/delete/<int:id>', methods=['POST'])
-def delete_book(id):
-    book = Book.get_or_none(Book.id == id)
-    if book:
-        book.delete_instance()
-    return redirect('/books')
+    return render_template('book_edit.html', book=book)
