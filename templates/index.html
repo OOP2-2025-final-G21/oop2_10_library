@@ -43,5 +43,24 @@
                 </tr>
             </tbody>
         </table>
+        <h3>ジャンル別の本の冊数</h3>
+
+<table>
+    <thead>
+        <tr>
+            <th>ジャンル</th>
+            <th>冊数</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for g in genre_stats %}
+        <tr>
+            <td>{{ g.genre }}</td>
+            <td>{{ g.count }}冊</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
     </body>
 </html>
