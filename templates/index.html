@@ -43,5 +43,34 @@
                 </tr>
             </tbody>
         </table>
+
+        <hr />
+        <h3>貸出状況</h3>
+        <p>現在貸出中の冊数: <strong>{{ current_borrowed }}</strong> 冊</p>
+
+        <h4>月別貸出件数</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>月</th>
+                    <th>貸出件数</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for month, count in monthly_borrows %}
+                <tr>
+                    <td>{{ month }}</td>
+                    <td>{{ count }} 件</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4>よく借りられている本（上位5）</h4>
+        <ol>
+            {% for b in top_books %}
+            <li>{{ b.title }} — {{ b.count }} 回</li>
+            {% endfor %}
+        </ol>
     </body>
 </html>

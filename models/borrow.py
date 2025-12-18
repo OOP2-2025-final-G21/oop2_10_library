@@ -1,13 +1,14 @@
 from peewee import ForeignKeyField, DateTimeField, fn
-from db import db
-from .user import User
+from .db import db
+from .user import Member
 from .book import Book # Bookモデルをインポート
 import datetime
 
 class Borrow(db.Model):
-    user = ForeignKeyField(User, backref='borrows') # 誰が
+    user = ForeignKeyField(Member, backref='borrows') # 誰が
     book = ForeignKeyField(Book, backref='borrows') # 何を
     order_date = DateTimeField(default=datetime.datetime.now) # いつ
+    return_date = DateTimeField(null=True) # 返却日（Noneなら未返却）
 
     class Meta:
         database = db
@@ -16,6 +17,11 @@ class Borrow(db.Model):
 def total_borrows():
     """合計貸出回数を返す（Borrow レコードの件数）"""
     return Borrow.select().count()
+
+
+def current_borrowed_count():
+    """現在貸出中（返却日が未設定）の貸出件数を返す"""
+    return Borrow.select().where(Borrow.return_date.is_null()).count()
 
 
 def monthly_borrow_counts():

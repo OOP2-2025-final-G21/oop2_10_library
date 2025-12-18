@@ -117,9 +117,9 @@ def main(reset=False):
                     borrow_date = datetime.now() - timedelta(days=days_ago)
 
                     Borrow.create(
-                        member=member,
+                        user=member,
                         book=book,
-                        borrow_date=borrow_date
+                        order_date=borrow_date
                     )
                     inserted_borrows += 1
                 except Exception as e:

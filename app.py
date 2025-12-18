@@ -3,7 +3,7 @@ from models import initialize_database
 from routes import blueprints
 from models.user import Member
 from models.book import Book
-from models.borrow import Borrow
+from models.borrow import Borrow, current_borrowed_count, monthly_borrow_counts, top_borrowed_books
 from peewee import fn
 from datetime import datetime, timedelta
 
@@ -34,10 +34,18 @@ def index():
     three_months_ago = now - timedelta(days=90)
     new_members_three_months = Member.select().where(Member.created_at >= three_months_ago).count()
 
+    # 貸出の集計
+    current_borrowed = current_borrowed_count()
+    monthly_borrows = monthly_borrow_counts()
+    top_books = top_borrowed_books(limit=5)
+
     return render_template('index.html',
                         new_members_week=new_members_week,
                         new_members_month=new_members_month,
-                        new_members_three_months=new_members_three_months)
+                        new_members_three_months=new_members_three_months,
+                        current_borrowed=current_borrowed,
+                        monthly_borrows=monthly_borrows,
+                        top_books=top_books)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
