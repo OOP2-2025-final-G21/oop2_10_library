@@ -44,6 +44,10 @@ routes.blueprints が未定義または型不一致 → __init__.py を確認
 > このリポジトリのアプリを動作させるために行う手順を詳細に書いてください。
 
 ```bash
-$ python app.py
-# Try accessing "http://localhost:8080" in your browser.
+seed_data.pyを以下のコマンドで実行し，サンプルデータを追加する．
+-$ python3 seed_data.py --reset
+
+app.pyを実行
+-$ python app.py
+
 ```
