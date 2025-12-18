@@ -12,10 +12,36 @@
     </head>
     <body>
         <h1>図書館管理システム</h1>
+
+        <h2>管理メニュー</h2>
         <ul>
             <li><a href="{{ url_for('user.list') }}">メンバー</a></li>
             <li><a href="{{ url_for('book.list') }}">本</a></li>
             <li><a href="{{ url_for('borrow.list') }}">貸出</a></li>
         </ul>
+
+        <h3>最近登録された会員数</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>期間</th>
+                    <th>新規会員数</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>過去7日間</td>
+                    <td>{{ new_members_week }}人</td>
+                </tr>
+                <tr>
+                    <td>過去30日間</td>
+                    <td>{{ new_members_month }}人</td>
+                </tr>
+                <tr>
+                    <td>過去90日間</td>
+                    <td>{{ new_members_three_months }}人</td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
