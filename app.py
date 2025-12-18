@@ -34,6 +34,13 @@ def index():
     three_months_ago = now - timedelta(days=90)
     new_members_three_months = Member.select().where(Member.created_at >= three_months_ago).count()
 
+    # Bookのジャンル別件数を取得
+    genre_stats = (
+        Book
+        .select(Book.genre, fn.COUNT(Book.id).alias('count'))
+        .group_by(Book.genre)
+    )
+
     return render_template('index.html',
                         new_members_week=new_members_week,
                         new_members_month=new_members_month,
