@@ -18,7 +18,7 @@ def add():
         member_id = request.form['member_id']
         book_id = request.form['book_id']
         borrow_date = datetime.now()
-        Borrow.create(member=member_id, book=book_id, borrow_date=borrow_date)
+        Borrow.create(user=member_id, book=book_id, order_date=borrow_date)
         return redirect(url_for('borrow.list'))
     
     members = Member.select()
@@ -33,8 +33,7 @@ def edit(borrow_id):
         return redirect(url_for('borrow.list'))
 
     if request.method == 'POST':
-        borrow.member = request.form['member_id']
-        borrow.book = request.form['book_id']
+        borrow.user = request.form['member_id']
         borrow.save()
         return redirect(url_for('borrow.list'))
 
