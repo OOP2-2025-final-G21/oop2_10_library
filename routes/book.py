@@ -1,15 +1,21 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from peewee import fn
 from models import Book
 
 book_bp = Blueprint('book', __name__, url_prefix='/books')
 
+# =====================
 # 一覧表示
+# =====================
 @book_bp.route('/')
 def list():
     books = Book.select()
     return render_template('book_list.html', title='本一覧', items=books)
 
+
+# =====================
 # 新規登録
+# =====================
 @book_bp.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
@@ -29,7 +35,9 @@ def add():
     return render_template('book_add.html')
 
 
+# =====================
 # 編集
+# =====================
 @book_bp.route('/edit/<int:book_id>', methods=['GET', 'POST'])
 def edit(book_id):
     book = Book.get_or_none(Book.id == book_id)
@@ -45,3 +53,21 @@ def edit(book_id):
         return redirect(url_for('book.list'))
 
     return render_template('book_edit.html', book=book)
+
+
+# =====================
+# ★ 第11回用：集計処理 ★
+# =====================
+def count_books_by_genre():
+    """
+    ジャンル別の本の冊数を集計する
+    seed_data.py で投入したデータを想定
+    """
+    return (
+        Book
+        .select(
+            Book.genre,
+            fn.COUNT(Book.id).alias("count")
+        )
+        .group_by(Book.genre)
+    )
